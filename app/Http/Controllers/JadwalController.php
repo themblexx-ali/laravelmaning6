@@ -18,7 +18,7 @@ class JadwalController extends Controller
         $jam_slots_weekday = JamSlot::where('tipe_hari', 'weekday')->get();
         $jam_slots_weekend = JamSlot::where('tipe_hari', 'weekend')->get();
 
-        return view('jadwal.index', compact('lapangan', 'jam_slot_weekday', 'jam_slot_weekend'));
+        return view('jadwal.index', compact('lapangan', 'jam_slots_weekday', 'jam_slots_weekend'));
     }
 
     /**

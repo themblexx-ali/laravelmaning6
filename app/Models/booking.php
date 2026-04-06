@@ -10,6 +10,7 @@ class booking extends Model
         'nama',
         'no_hp',
         'tanggal',
-        'jam',
+        'jam_slot_id',
+        'pembayaran',
     ];
 }

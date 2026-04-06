@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\dashboard;
+use App\Models\Lapangan;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -12,7 +13,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        //
+        $lapangan = Lapangan::all();
+        return view('dashboard', compact('lapangan'));
     }
 
     /**

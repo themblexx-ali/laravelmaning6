@@ -76,6 +76,7 @@
                         @foreach($jam_slots_weekday as $jam)
                             <div class="jam-box">
                                 {{ $jam->jam_mulai }} - {{ $jam->jam_selesai }}
+                                <a href="{{ route('booking.create', ['jam_slot_id' => $jam->id]) }}" class="btn btn-success">Buat Pesanan</a>
                             </div>
                         @endforeach
 
@@ -84,9 +85,12 @@
                         @foreach($jam_slots_weekend as $jam)
                             <div class="jam-box">
                                 {{ $jam->jam_mulai }} - {{ $jam->jam_selesai }}
+                                <a href="{{ route('booking.create', ['jam_slot_id' => $jam->id]) }}" class="btn btn-success">Buat Pesanan</a>
                             </div>
                         @endforeach
                     @endif
+
+                    <a href="{{ route('lapangan.detail', $lap->id) }}" class="btn btn-primary">Lihat Detail</a>
 
                 </div>
             @endforeach

@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jam_slots', function (Blueprint $table) {
-            $table->id();
-            $table->enum('tipe_hari', ['weekday', 'weekend']);
-            $table->time('jam_mulai');
-            $table->time('jam_selesai');
-            $table->timestamps();
+        Schema::table('bookings', function (Blueprint $table) {
+            $table->date('tanggal')->nullable();
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jam_slots');
+        Schema::table('bookings', function (Blueprint $table) {
+            //
+        });
     }
 };

@@ -12,36 +12,35 @@
         padding: 100px;
         border: 5px solid #aaa;
         background-color: #202020;
-        color: white;
+        color: black;
     }
     .booking h1 {
         font-size: 50px;
         margin-bottom: 20px;
+        color: white;
     }
-    .booking p {
-         font-size: 20px;
-         margin-bottom: 20px;
-     }
-        .booking h3 {
-            font-size: 30px;
-            margin-bottom: 15px;
+    .booking label {
+        font-size: 20px;
+        margin-bottom: 10px;
+        color: white;
+    }
+    .booking input, .booking select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: none;
+        border-radius: 5px;
+    }
+        .booking button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
-        .booking div {
-            background-color: #202020;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 10px;
-        }
-        .booking div p {
-            font-size: 18px;
-        }
-        .booking div span {
-            font-weight: bold;
-        }
-        .booking img {
-            width: 400px;
-            border-radius: 15px;
-            margin-bottom: 20px;
+        .booking button:hover {
+            background-color: #45a049;
         }
 
         @keyframes slideIn {
@@ -55,24 +54,40 @@
             }
         }
 </style>
-<div class="booking">
-    <form action="/booking/store" method="POST">
-    @csrf
+    <div class="booking">
+        <h1>Booking Lapangan</h1>
+        <form action="{{ route('booking.store') }}" method="POST">
+        @csrf
 
-    <input type="text" name="nama" placeholder="Nama">
-    <input type="text" name="no_hp" placeholder="No HP">
-    <input type="date" name="tanggal">
+            <label>Nama Pemesan:</label><br>
+            <input type="text" name="nama" required><br><br>
 
-    <label>Pilih Jam:</label><br>
+            <label>Nomor HP:</label><br>
+            <input type="text" name="no_hp" required><br><br>
 
-    @foreach($jam as $item)
-        <label>
-            <input type="checkbox" name="jam[]" value="{{ $item->jam }}">
-            {{ date('H:i', strtotime($item->jam)) }}
-        </label><br>
-    @endforeach
+            <label>Jam Booking:</label><br>
+            <input type="text" value="{{ $jam->jam_mulai }} - {{ $jam->jam_selesai }}" readonly><br><br>
 
-    <button type="submit">Booking</button>
-</form>
-</div>
+            {{-- kirim id jam --}}
+            <input type="hidden" name="jam_slot_id" value="{{ $jam->id }}">
+
+            <label>Pembayaran:</label><br>
+            <select name="pembayaran" required>
+                <option value="cash">Cash</option>
+                <option value="transfer">Transfer</option>
+            </select><br><br>
+
+            <label>Tanggal:</label><br>
+            <input type="date" name="tanggal" required><br><br>
+
+            <button type="submit" class="btn btn-primary">Booking</button>
+            @if($errors->any())
+                <div style="color:red;">
+            @foreach($errors->all() as $error)
+                <p>{{ $error }}</p>
+            @endforeach
+                </div>
+            @endif
+        </form> 
+    </div>
 </x-app-layout>

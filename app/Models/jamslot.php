@@ -8,6 +8,7 @@ class JamSlot extends Model
 {
     protected $fillable = [
         'tipe_hari',
-        'jam',
+        'jam_mulai',
+        'jam_selesai',
     ];
 }

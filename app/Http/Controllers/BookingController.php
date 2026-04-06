@@ -2,66 +2,65 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\jadwal;
+use App\Models\Jadwal;
 use App\Models\JamSlot;
-use App\Models\lapangan;
-use App\Models\booking;
+use App\Models\Lapangan;
+use App\Models\Booking;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // masuk dari klik "buat pesanan"
     public function booking($id)
     {
-        $jadwal = Jadwal::FindOrFail($id);
+        $jadwal = Jadwal::findOrFail($id);
+
         $jam = JamSlot::where('tipe_hari', $jadwal->tipe_hari)->get();
+
         return view('booking.index', compact('jadwal', 'jam'));
     }
-    public function index()
-    {
-        $lapangan = Lapangan::first();
-        return view('booking.index', compact('lapangan'));        
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // form isi booking
     public function create(Request $request)
     {
-        $tanggal = $request->tanggal;
-
-        $hari = date('l', strtotime($tanggal));
-        $tipe = in_array($hari, ['Saturday', 'Sunday']) ? 'weekend' : 'weekday';
-
-        $jam = JamSlot::where('tipe_hari', $tipe)->orderBy('jam')->get();
+        $jam = JamSlot::FindOrFail($request->jam_slot_id);
 
         return view('booking.create', compact('jam'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // simpan booking
     public function store(Request $request)
     {
-        foreach ($request->jam as $jam) {
+        dd($request->all());
+        // VALIDASI
+        $request->validate([
+            'nama' => 'required',
+            'no_hp' => 'required',
+            'tanggal' => 'required|date',
+            'jam_slot_id' => 'required',
+            'pembayaran' => 'required',
+        ]);
 
-            $cek = Booking::where('tanggal', $request->tanggal)
-                ->where('jam', $jam)
-                ->exists();
+        // CEK BENTROK
+        $cek = Booking::where('jam_slot_id', $request->jam_slot_id)
+            ->where('tanggal', $request->tanggal)
+            ->exists();
 
-            if ($cek) {
-                return back()->with('error', 'Ada jam yang sudah dibooking');
-            }
-
-            Booking::create([
-                'nama' => $request->nama,
-                'no_hp' => $request->no_hp,
-                'tanggal' => $request->tanggal,
-                'jam' => $jam,
-            ]);
+        if ($cek) {
+            return back()->with('error', 'Jam sudah dibooking!');
         }
+
+        // SIMPAN
+        Booking::create([
+            'nama' => $request->nama,
+            'no_hp' => $request->no_hp,
+            'tanggal' => $request->tanggal, // 🔥 WAJIB INI
+            'jam_slot_id' => $request->jam_slot_id,
+            'pembayaran' => $request->pembayaran,
+        ]);
+        dd('Booking berhasil!');
+
+        return redirect('/')->with('success', 'Booking berhasil!');
     }
 
     /**

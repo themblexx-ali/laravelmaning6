@@ -57,31 +57,14 @@
     </style>
     <div class="booking">
         <h1>Booking Lapangan</h1>
-        <p>Silakan pilih jadwal yang tersedia untuk melakukan booking lapangan futsal.</p>
-        @forelse ($lapangan->jadwal as $jadwal)
-            <div class="booking-card">
-                <h3>{{ $jadwal->hari }}</h3>
-                <p>Jam: 
-                    <select name="jam">
-                        @foreach($jam as $item)
-                            <option value="{{ $item->jam }}">
-                                {{ $item->jam }}
-                            </option>
-                        @endforeach
-                    </select>
-                </p>
-                <p>Status: {{ $jadwal->status }}</p>
-                <p>Harga: Rp {{ number_format($jadwal->harga, 0, ',', '.') }}</p>
-                <p>
-                    @if ($jadwal->status === 'Tersedia')
-                        <a href="{{ route('booking.create', ['jadwal_id' => $jadwal->id]) }}" class="btn btn-primary">Booking Sekarang</a>
-                    @else
-                        <span class="text-muted">Tidak Tersedia</span>
-                    @endif
-                </p>
-            </div>
-        @empty
-            <p>Maaf, tidak ada jadwal yang tersedia untuk booking saat ini.</p>
-        @endforelse
+        <form action="">
+            <label for="nama">Nama Pemesan:</label><br>
+            <input type="text" id="nama" name="nama" required><br><br>
+
+            <label for="jam">Jam Booking:</label><br>
+            <input type="time" id="jam" name="jam" required><br><br>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
 </x-app-layout>
