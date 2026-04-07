@@ -19,6 +19,11 @@ return new class extends Migration
             $table->foreignId('jam_slot_id')->constrained()->onDelete('cascade');
             $table->time('jam');
             $table->timestamps();
+            $table->string('payment_method')->nullable();
+            $table->string('payment_status')->default('pending');
+            $table->string('bukti_transfer')->nullable();
+            $table->integer('total_harga')->default(0);
+            
         });
     }
 
