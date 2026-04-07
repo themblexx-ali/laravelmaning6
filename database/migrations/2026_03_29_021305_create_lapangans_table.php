@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('lapangans', function (Blueprint $table) {
             $table->id();
+            $table->string('nama'); // 🔥 TAMBAH INI
             $table->timestamps();
-        });
+});
     }
 
     /**

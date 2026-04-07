@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('no_hp');
             $table->date('tanggal');
+            $table->foreignId('jam_slot_id')->constrained()->onDelete('cascade');
             $table->time('jam');
             $table->timestamps();
         });

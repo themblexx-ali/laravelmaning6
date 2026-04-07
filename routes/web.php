@@ -10,7 +10,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/lapangan', [LapanganController::class, 'index'])->name('lapangan.index');
+Route::get('/', [LapanganController::class, 'index'])->name('lapangan.index');
 
 Route::get('/lapangan/{id}', [LapanganController::class, 'detail'])->name('lapangan.detail');
 

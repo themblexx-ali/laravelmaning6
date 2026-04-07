@@ -31,7 +31,7 @@ class BookingController extends Controller
     // simpan booking
     public function store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         // VALIDASI
         $request->validate([
             'nama' => 'required',
@@ -58,7 +58,7 @@ class BookingController extends Controller
             'jam_slot_id' => $request->jam_slot_id,
             'pembayaran' => $request->pembayaran,
         ]);
-        dd('Booking berhasil!');
+        return redirect()->back()->with('success', 'Booking berhasil!');
 
         return redirect('/')->with('success', 'Booking berhasil!');
     }

@@ -1,158 +1,176 @@
 <x-app-layout>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+<style>
+    body {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        background: #0f0f0f;
+        color: white;
+    }
 
-        body {
-            background: #121212;
-        }
+    /* HERO */
+    .hero {
+        min-height: 90vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 0 20px;
+        position: relative;
+    }
 
-        /* HERO */
-        .hero {
-            animation: slideIn 1.5s ease-in-out;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 120px 10%;
-            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
+    /* GLOW BACKGROUND */
+    .hero::before {
+        content: "";
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(212,175,55,0.2), transparent 70%);
+        filter: blur(120px);
+        top: 20%;
+        z-index: 0;
+    }
 
-        .hero-text {
-            max-width: 500px;
-            z-index: 2;
-        }
+    .hero h1 {
+        font-size: 60px;
+        margin-bottom: 15px;
+        z-index: 1;
+    }
 
-        .hero-text h1 {
-            font-size: 70px;
-            font-style: italic;
-            font-family: "Times New Roman", serif;
-            margin-bottom: 15px;
+    .hero h1 span {
+        background: linear-gradient(90deg, #d4af37, #f5e6b3);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
 
-            /* GOLD TEXT */
-            background: linear-gradient(90deg, #d4af37, #f5e6b3);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+    .hero p {
+        max-width: 600px;
+        color: #aaa;
+        margin-bottom: 30px;
+        line-height: 1.6;
+        z-index: 1;
+    }
 
-        .hero-text p {
-            color: #bbb;
-            margin-bottom: 25px;
-            line-height: 1.6;
-        }
+    /* BUTTON */
+    .btn {
+        padding: 14px 30px;
+        border-radius: 12px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: 0.3s;
+        z-index: 1;
+    }
 
-        /* GOLD BUTTON */
-        .btn {
-            padding: 12px 25px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: bold;
+    .btn-main {
+        background: linear-gradient(90deg, #d4af37, #f5e6b3);
+        color: black;
+        box-shadow: 0 0 15px rgba(212,175,55,0.5);
+    }
 
-            background: linear-gradient(90deg, #d4af37, #f5e6b3);
-            color: black;
+    .btn-main:hover {
+        transform: scale(1.05);
+    }
 
-            box-shadow: 0 0 10px rgba(212,175,55,0.4);
-            transition: 0.3s;
-        }
+    /* FEATURES */
+    .features {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        padding: 60px 10%;
+        flex-wrap: wrap;
+    }
 
-        .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(212,175,55,0.7);
-        }
+    .feature-card {
+        background: #1a1a1a;
+        padding: 25px;
+        border-radius: 15px;
+        width: 250px;
+        text-align: center;
+        border: 1px solid rgba(212,175,55,0.2);
+        transition: 0.3s;
+    }
 
-        .hero img {
-            width: 420px;
-            border-radius: 20px;
-            box-shadow: 0 0 25px rgba(212,175,55,0.2);
-            transition: 0.3s;
-        }
+    .feature-card:hover {
+        transform: translateY(-5px);
+        border-color: #d4af37;
+    }
 
-        .hero img:hover {
-            transform: scale(1.03);
-        }
+    .feature-card h3 {
+        margin-bottom: 10px;
+        color: #d4af37;
+    }
 
-        /* GLOW EFFECT */
-        .glow {
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(212,175,55,0.3), transparent 70%);
-            filter: blur(120px);
-            top: 10%;
-            left: 30%;
-            z-index: 1;
-        }
+    .feature-card p {
+        color: #aaa;
+        font-size: 14px;
+    }
 
-        /* ABOUT */
-        .about {
-            animation: slideIn 1.5s ease-in-out;
-            padding: 80px 10%;
-            background: #1a1a1a;
-            color: white;
-        }
+    /* ABOUT */
+    .about {
+        text-align: center;
+        padding: 60px 20px;
+        background: #111;
+    }
 
-        .about h2 {
-            font-size: 32px;
-            margin-bottom: 20px;
+    .about h2 {
+        margin-bottom: 15px;
+        font-size: 30px;
+        background: linear-gradient(90deg, #d4af37, #f5e6b3);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
 
-            background: linear-gradient(90deg, #d4af37, #f5e6b3);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+    .about p {
+        max-width: 600px;
+        margin: auto;
+        color: #aaa;
+    }
+</style>
 
-        .about p {
-            color: #aaa;
-            max-width: 700px;
-            line-height: 1.6;
-        }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
+<!-- HERO -->
+<div class="hero">
+    <h1>NEPER <span>FUTSAL</span></h1>
 
-    <div class="hero">
-        <div class="glow"></div>
+    <p>
+        Booking lapangan futsal jadi lebih cepat, praktis,
+        dan nyaman langsung dari genggaman.
+    </p>
 
-        <div class="hero-text">
-            <h1>Neper Futsal</h1>
-            <p>
-                Situs booking lapangan futsal SMK Negeri 1 Cirebon
-                yang menghadirkan kemudahan, kenyamanan,
-                dan pengalaman premium.
-            </p>
+    @if($lapangan)
+        <a href="{{ route('jadwal.index', $lapangan->id) }}" class="btn btn-main">
+            Pesan Sekarang
+        </a>
+    @endif
+</div>
 
-            @if($lapangan)
-                <a class="btn" href="{{ route('jadwal.index', $lapangan->id) }}">
-                    Pesan Sekarang
-                </a>
-            @endif
-        </div>
 
-        <img src="{{ asset('img/lapFutsal.jpg') }}" alt="Futsal">
+<!-- FEATURES -->
+<div class="features">
+    <div class="feature-card">
+        <h3>Cepat</h3>
+        <p>Booking lapangan hanya dalam hitungan detik tanpa ribet.</p>
     </div>
 
-    <div class="about" id="about">
-        <p style="color:#d4af37;">SMK Negeri 1 Cirebon</p>
-        <h2>Tentang Situs</h2>
-        <p>
-            Website ini digunakan untuk mempermudah proses booking lapangan futsal secara online.
-            Pengguna dapat melihat jadwal, memilih lapangan, dan melakukan pemesanan dengan cepat
-            dan efisien.
-        </p>
+    <div class="feature-card">
+        <h3>Mudah</h3>
+        <p>Tampilan simpel dan mudah digunakan semua orang.</p>
     </div>
 
-</x-app-layout>
+    <div class="feature-card">
+        <h3>Efisien</h3>
+        <p>Lihat jadwal dan pesan kapan saja tanpa datang langsung.</p>
+    </div>
+</div>
+
+
+<!-- ABOUT -->
+<div class="about" id="about">
+    <h2>Tentang Neper Futsal</h2>
+    <p>
+        Website ini dibuat untuk mempermudah proses booking lapangan futsal
+        secara online di SMK Negeri 1 Cirebon dengan sistem yang cepat dan modern.
+    </p>
+</div>
+
+</x-app-layout> 
