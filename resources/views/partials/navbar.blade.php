@@ -133,7 +133,7 @@ body {
 
     <nav>
         <ul class="nav">
-            <li><a class="nav-link" href="/lapangan">Home</a></li>
+            <li><a class="nav-link" href="/">Home</a></li>
             <li><a class="nav-link" href="/jadwal">Jadwal</a></li>           
             <li><a class="nav-link" href="/profile">Account</a></li>
         </ul>

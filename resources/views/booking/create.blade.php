@@ -1,93 +1,112 @@
 <x-app-layout>
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
+    body {
+        background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
+        font-family: 'Segoe UI', sans-serif;
     }
-    /* BOOKING */
-    .booking {
-        animation: slideIn 2s ease-in-out;
-        padding: 100px;
-        border: 5px solid #aaa;
-        background-color: #202020;
-        color: black;
+
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        background: #2b2b2b;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        animation: fadeIn 1s ease-in-out;
     }
-    .booking h1 {
-        font-size: 50px;
-        margin-bottom: 20px;
+
+    h1 {
+        text-align: center;
+        color: #fff;
+        margin-bottom: 25px;
+    }
+
+    label {
+        color: #ddd;
+        font-weight: 500;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 12px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        background: #444;
+        color: #fff;
+    }
+
+    input:focus, select:focus {
+        border: 1px solid #4CAF50;
+        background: #555;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(135deg, #4CAF50, #2e7d32);
+        border: none;
+        border-radius: 10px;
         color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
     }
-    .booking label {
-        font-size: 20px;
+
+    .btn:hover {
+        transform: scale(1.05);
+        background: linear-gradient(135deg, #45a049, #1b5e20);
+    }
+
+    .error {
+        background: #ff4444;
+        padding: 10px;
+        border-radius: 8px;
         margin-bottom: 10px;
         color: white;
     }
-    .booking input, .booking select {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border: none;
-        border-radius: 5px;
-    }
-        .booking button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .booking button:hover {
-            background-color: #45a049;
-        }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px);}
+        to { opacity: 1; transform: translateY(0);}
+    }
 </style>
-    <div class="booking">
-        <h1>Booking Lapangan</h1>
-        <form action="{{ route('booking.store') }}" method="POST">
+
+<div class="container">
+    <h1>Booking Lapangan</h1>
+
+    <form action="{{ route('booking.store') }}" method="POST">
         @csrf
 
-            <label>Nama Pemesan:</label><br>
-            <input type="text" name="nama" required><br><br>
+        <label>Nama Pemesan</label>
+        <input type="text" name="nama" placeholder="Masukkan nama..." required>
 
-            <label>Nomor HP:</label><br>
-            <input type="text" name="no_hp" required><br><br>
+        <label>Nomor HP</label>
+        <input type="text" name="no_hp" placeholder="08xxxx..." required>
 
-            <label>Jam Booking:</label><br>
-            <input type="text" value="{{ $jam->jam_mulai }} - {{ $jam->jam_selesai }}" readonly><br><br>
+        <label>Jam Booking</label>
+        <input type="text" value="{{ $jam->jam_mulai }} - {{ $jam->jam_selesai }}" readonly>
 
-            {{-- kirim id jam --}}
-            <input type="hidden" name="jam_slot_id" value="{{ $jam->id }}">
+        <input type="hidden" name="jam_slot_id" value="{{ $jam->id }}">
 
-            <label>Pembayaran:</label><br>
-            <select name="pembayaran" required>
-                <option value="cash">Cash</option>
-                <option value="transfer">Transfer</option>
-            </select><br><br>
+        <label>Pembayaran</label>
+        <select name="pembayaran">
+            <option value="cash">Cash</option>
+            <option value="transfer">Transfer</option>
+        </select>
 
-            <label>Tanggal:</label><br>
-            <input type="date" name="tanggal" required><br><br>
+        <label>Tanggal</label>
+        <input type="date" name="tanggal" required>
 
-            <button type="submit" class="btn btn-primary">Booking</button>
-            @if($errors->any())
-                <div style="color:red;">
+        <button type="submit" class="btn">Booking Sekarang</button>
+
+        @if($errors->any())
             @foreach($errors->all() as $error)
-                <p>{{ $error }}</p>
+                <div class="error">{{ $error }}</div>
             @endforeach
-                </div>
-            @endif
-        </form> 
-    </div>
+        @endif
+    </form>
+</div>
 </x-app-layout>
