@@ -14,8 +14,19 @@ Route::get('/', [LapanganController::class, 'index'])->name('lapangan.index');
 
 Route::get('/lapangan/{id}', [LapanganController::class, 'detail'])->name('lapangan.detail');
 
+Route::resource('jadwal', JadwalController::class);
+
+Route::get('/jadwal/{id}/edit', [JadwalController::class, 'edit'])->name('jadwal.edit');
+
 Route::get('/jadwal', [JadwalController::class, 'index'])
     ->name('jadwal.index');
+
+Route::put('/jadwal/{id}', [JadwalController::class, 'update'])->name('jadwal.update');
+
+Route::get('/jadwal/create', [JadwalController::class, 'create'])->name('jadwal.create');
+Route::post('/jadwal', [JadwalController::class, 'store'])->name('jadwal.store');
+
+Route::delete('/jadwal/{id}', [JadwalController::class, 'destroy'])->name('jadwal.destroy');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 

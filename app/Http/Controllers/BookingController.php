@@ -54,7 +54,7 @@ class BookingController extends Controller
         Booking::create([
             'nama' => $request->nama,
             'no_hp' => $request->no_hp,
-            'tanggal' => $request->tanggal, // 🔥 WAJIB INI
+            'tanggal' => $request->tanggal,
             'jam_slot_id' => $request->jam_slot_id,
             'pembayaran' => $request->pembayaran,
         ]);

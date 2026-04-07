@@ -26,7 +26,7 @@ class JadwalController extends Controller
      */
     public function create()
     {
-        //
+        return view('jadwal.create');
     }
 
     /**
@@ -34,7 +34,19 @@ class JadwalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+        'nama_hari' => 'required',
+        'tipe_hari' => 'required',
+    ]);
+
+    Jadwal::create([
+        'lapangan_id' => 1, // Ganti dengan ID lapangan yang sesuai
+        'nama_hari' => $request->nama_hari,
+        'tipe_hari' => $request->tipe_hari,
+        'status' => 'tersedia'
+    ]);
+
+    return redirect()->route('dashboard')->with('success', 'Jadwal berhasil ditambahkan');
     }
 
     /**
@@ -48,24 +60,37 @@ class JadwalController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(jadwal $jadwal)
+    public function edit($id)
     {
-        //
+        $jadwal = Jadwal::findOrFail($id);
+        return view('jadwal.edit', compact('jadwal'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, jadwal $jadwal)
+    public function update(Request $request, $id)
     {
-        //
-    }
+        $jadwal = Jadwal::findOrFail($id);
+
+        $jadwal->update([
+        'lapangan_id' => $jadwal->lapangan_id, // tetap menggunakan lapangan_id yang sama
+        'nama_hari' => $request->nama_hari,
+        'tipe_hari' => $request->tipe_hari,
+        'status' => $request->status,
+        ]);
+
+        return redirect()->route('dashboard')->with('success', 'Berhasil update');
+        }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(jadwal $jadwal)
     {
-        //
+        $jadwal = Jadwal::findOrFail($jadwal->id);
+        $jadwal->delete();
+
+        return redirect()->route('dashboard')->with('success', 'Berhasil dihapus');
     }
 }

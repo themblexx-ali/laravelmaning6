@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JamSlot;
 use App\Models\dashboard;
+use App\Models\Jadwal;
+use App\Models\Booking;
 use App\Models\Lapangan;
 use Illuminate\Http\Request;
 
@@ -13,8 +16,10 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $lapangan = Lapangan::all();
-        return view('dashboard', compact('lapangan'));
+        $jadwal = Jadwal::all();
+        $booking = Booking::all();
+
+        return view('dashboard', compact('jadwal', 'booking'));
     }
 
     /**
@@ -44,17 +49,25 @@ class DashboardController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(dashboard $dashboard)
+    public function edit($id)
     {
-        //
+        $jadwal = Jadwal::findOrFail($id);
+        return view('jadwal.edit', compact('jadwal'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, dashboard $dashboard)
+    public function updateStatus($id)
     {
-        //
+        $jadwal = Jadwal::findOrFail($id);
+
+        // toggle status
+        $jadwal->status = $jadwal->status == 'tersedia' ? 'penuh' : 'tersedia';
+
+        $jadwal->save();
+
+        return back()->with('success', 'Status berhasil diubah');
     }
 
     /**
